@@ -6,7 +6,7 @@
           :on-preview="handlePictureCardPreview"
           :on-remove="handleRemove"
           :on-success="handleAvatarSuccess"
-          action="http://192.168.3.5:8081/upload/fileUpload"
+          action="http://127.0.0.1:8081/upload/fileUpload"
           list-type="picture-card">
           <i class="el-icon-plus" />
         </el-upload>

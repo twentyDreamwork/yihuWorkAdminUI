@@ -21,6 +21,7 @@ export default {
   methods: {
     to() {
       const _this = this.$refs.form
+      _this.getClassify()
       _this.form = { id: this.data.id, jobName: this.data.jobName, beanName: this.data.beanName, methodName: this.data.methodName, params: this.data.params, cronExpression: this.data.cronExpression, isPause: this.data.isPause.toString(), remark: this.data.remark }
       _this.dialog = true
     }
