@@ -19,6 +19,10 @@
       <el-form-item label="价格" prop="price">
         <el-input v-model="form.price" style="width: 270px;"/>
       </el-form-item>
+      <el-form-item label="分类" prop="parentId">
+        <treeselect v-model="form.cateId" :options="classify" style="width: 460px;" placeholder="选择分类" />
+        <!-- <el-input v-model="form.parentId" style="width: 270px;"/> -->
+      </el-form-item>
       <el-form-item label="推荐商品" prop="recommend" style="width: 370px;">
         <el-radio-group v-model="form.recommend">
           <el-radio label="1">推荐</el-radio>
@@ -63,14 +67,14 @@
         </el-col>
       </el-form-item> -->
       <el-form-item prop="goodsImg" label="商品图片">
-        <el-input v-model="form.goodsImg" type="hidden" />
+        <el-input v-model="form.goodsImg" type="text" />
       </el-form-item>
       <el-form-item >
         <el-upload
           :on-preview="handlePictureCardPreview"
           :on-remove="handleRemove"
           :on-success="handleAvatarSuccess"
-          action="http://192.168.3.5:8081/upload/fileUpload"
+          action="http://127.0.0.1:8081/upload/fileUpload"
           list-type="picture-card">
           <i class="el-icon-plus" />
         </el-upload>
@@ -87,9 +91,12 @@
 </template>
 
 <script>
-import { getDepts } from '@/api/commodity/commodity'
+import { getDepts, getClassifyTree } from '@/api/commodity/commodity'
 import { add, edit } from '@/api/commodity/commodity'
+import Treeselect from '@riophae/vue-treeselect'
+import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 export default {
+  components: { Treeselect },
   props: {
     isAdd: {
       type: Boolean,
@@ -110,9 +117,10 @@ export default {
       dialogVisible: false,
       multiple: false,
       limit: 1,
-      loading: false, dialog: false, depts: [], deptId: null,
+      loading: false, dialog: false, depts: [], deptId: null, classify: [],
       form: {
         id: '',
+        cateId: '',
         mainTitle: '',
         subTitle: '',
         taobaoUrl: '',
@@ -237,7 +245,12 @@ export default {
     handleAvatarSuccess(res, file) {
       console.info(file.url)
       this.imageUrl = URL.createObjectURL(file.raw)
-      // this.goodsImg = file.url
+      this.form.goodsImg = res.result
+    },
+    getClassify() {
+      getClassifyTree().then(res => {
+        this.classify = res
+      })
     }
   }
 }

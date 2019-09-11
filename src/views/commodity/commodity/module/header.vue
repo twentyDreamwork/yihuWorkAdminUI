@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     add() {
-      this.$refs.form.getDepts()
+      this.$refs.form.getClassify()
       this.$refs.form.dialog = true
     },
     toQuery() {
